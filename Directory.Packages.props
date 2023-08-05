@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="ConsoleTables" Version="2.5.0" />
+    <PackageVersion Include="Detached.Mappers.EntityFramework" Version="7.1.5" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
+  </ItemGroup>
+</Project>
