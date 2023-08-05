@@ -20,7 +20,7 @@ public class Program
             var newCreator = context.Map<Creator>(new Creator
             {
                 FullName = "Daniel Abraham.", PrimaryLanguage = "EN",
-                Works = new() { new Work { Title = @"The Dragon's Path.", Language = "EN" } }
+                Works = new() { new Work { Title = @"The Dragons Path", Language = "EN" } }
             });
             context.SaveChanges();
             var newId = newCreator.Id;
@@ -31,11 +31,12 @@ public class Program
                 Id = newId, FullName = "Daniel Abraham",
                 Works = new()
                 {
-                    new Work { Id = 42, Title = @"The Dragon's Path", Language = "EN" },
-                    new Work { Title = @"The Tyrant's Law", Language = "EN" },
+                    new Work { Title = @"The Dragon's Path", Language = "EN", Id = 2, CreatorId = newId},
+                    new Work { Title = @"The King's Blood", Language = "EN", CreatorId = newId},
                 }
             });
             context.SaveChanges();
+            Console.WriteLine($"Creator updated, number of books should be 2, is actually {updatedCreator.Works.Count}");
             ListCreators(context);
         }
     }
@@ -60,7 +61,7 @@ public class DetachedDbContext : DbContext
     {
         if (_connection == null)
         {
-            _connection = new SqliteConnection($"DataSource=file:{Guid.NewGuid()}?mode=memory&cache=shared");
+            _connection = new SqliteConnection($"DataSource=file:{Guid.NewGuid()}.sqlite3");
             _connection.Open();
         }
 
@@ -87,7 +88,7 @@ public class DetachedDbContext : DbContext
             Id = 1, FullName = @"Douglas Adams", PrimaryLanguage = "EN", Born = new DateTime(1952, 4, 11),
             Died = new DateTime(2001, 5, 11)
         });
-        modelBuilder.Entity<Work>().HasData(new Work { Id = 41, CreatorId = 1, Title = @"Young Zaphod Plays It Safe", Language = "EN"});
+        modelBuilder.Entity<Work>().HasData(new Work { Id = 1, CreatorId = 1, Title = @"Young Zaphod Plays It Safe", Language = "EN"});
         base.OnModelCreating(modelBuilder);
     }
 
@@ -106,7 +107,7 @@ public class Creator
 
     public DateTime Died { get; set; }
 
-    public string PrimaryLanguage { get; set; }
+    public string? PrimaryLanguage { get; set; }
 
     public Collection<Work> Works { get; set; }
 }
